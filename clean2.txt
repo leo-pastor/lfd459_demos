@@ -1,0 +1,9 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+pei "# Remove all demo2 components? (CTRL-C to cancel)"
+
+pe "kubectl delete deploy app-deploy"
+pe "kubectl delete svc app-deploy"
+kubectl delete -f dep-cm.yaml > /dev/null
