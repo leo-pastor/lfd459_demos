@@ -1,0 +1,41 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+pei "# Lets create a pod"
+
+kubectl create -f pod-cm.yaml > /dev/null
+pe "cat app-pod.yaml"
+pe "kubectl create -f app-pod.yaml"
+pe "kubectl expose pod app-pod"
+pe "kubectl get svc app-pod"
+pe 'IP=$(kubectl get svc app-pod --no-headers -o=custom-columns=ip:.spec.clusterIP)'
+#pe 'echo SVC IP is $IP'
+#echo SVC IP is $IP
+pe 'echo $IP'
+pe "curl $IP"
+pe "# At this point, we can use the service from any place inside the cluster."
+pe "# That includes from a Pod or any Node. Want to see it?"
+#pei "kubectl delete pod app-pod"
+
+pei "# Now lets change service type to NodePort"
+
+pe "kubectl delete svc app-pod"
+pe "kubectl create -f app-pod-svc.yaml"
+pe "kubectl get svc app-pod"
+pe 'PORT=$(kubectl get svc app-pod -o=custom-columns=ip:.spec.ports[0].nodePort --no-headers)'
+pe 'echo $PORT'
+pe 'curl localhost:$PORT'
+
+pe "# Now from the outside world"
+
+#pe "NODE_IP=$(curl ifconfig.io 2>/dev/null)"
+NODE_IP=$(curl ifconfig.io 2>/dev/null)
+
+pe 'echo $NODE_IP'
+pe "curl $NODE_IP:$PORT"
+
+
+#pei "kubectl delete pod app-pod"
+#pe "kubectl delete svc app-pod"
+#kubectl delete -f pod-cm.yaml > /dev/null

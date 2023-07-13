@@ -1,0 +1,46 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+pei "# Lets create a deployment"
+
+kubectl create -f dep-cm.yaml > /dev/null
+pe "cat app-deploy.yaml"
+pe "kubectl create -f app-deploy.yaml"
+#pe "kubectl expose pod app-pod"
+pe "kubectl create -f app-deploy-svc.yaml"
+pe "kubectl get svc app-deploy"
+
+pei "# Lets access the service locally first - using ClusterIP"
+pei "# Remember, even if the service type is NodePort, it will also create a ClusterIP!"
+
+pe 'IP=$(kubectl get svc app-deploy --no-headers -o=custom-columns=ip:.spec.clusterIP)'
+#pe 'echo SVC IP is $IP'
+#echo SVC IP is $IP
+pe 'echo $IP'
+pe "curl $IP"
+pe "# At this point, we could again use the service from any place inside the cluster."
+#pe "# That includes from a Pod or any Node. Want to see it?"
+#pei "kubectl delete pod app-pod"
+
+pei "# Now lets access the service using the NodePort"
+
+#pe "kubectl delete svc app-deploy-svc"
+#pe "kubectl create -f app-deploy -svc.yaml"
+#pe "kubectl get svc app-pod"
+pe 'PORT=$(kubectl get svc app-deploy -o=custom-columns=ip:.spec.ports[0].nodePort --no-headers)'
+pe 'echo $PORT'
+pe 'curl localhost:$PORT'
+
+pe "# Now from the outside world"
+
+#pe "NODE_IP=$(curl ifconfig.io 2>/dev/null)"
+NODE_IP=$(curl ifconfig.io 2>/dev/null)
+
+pe 'echo $NODE_IP'
+pe "curl $NODE_IP:$PORT"
+
+
+#pei "kubectl delete deploy app-deploy"
+#pe "kubectl delete svc app-deploy"
+#kubectl delete -f dep-cm.yaml > /dev/null

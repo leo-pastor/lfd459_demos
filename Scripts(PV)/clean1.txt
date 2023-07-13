@@ -1,0 +1,10 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+pei "# Remove all demo1 components? (CTRL-C to cancel)"
+
+pe "kubectl delete pod app-pod"
+pe "kubectl delete svc app-pod"
+kubectl delete -f pod-cm.yaml > /dev/null
+

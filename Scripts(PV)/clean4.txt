@@ -1,0 +1,10 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+N=demos
+
+pei "# Remove all demo4 components? (CTRL-C to cancel)"
+
+pe "kubectl delete deploy -n=$N hello-deploy"
+pe "kubectl delete svc -n=$N hello-deploy"

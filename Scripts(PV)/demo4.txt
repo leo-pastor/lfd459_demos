@@ -1,0 +1,54 @@
+#!/bin/bash
+. ../demo-magic.sh
+clear
+
+N=demos
+
+pei "# Lets see different pods responding to requests in a deployment"
+
+#pe "cat hello-deploy-all.yaml"
+#   WE CREATE BOTH THE DEPLOYMENT AND SVC NOW - CREATE TMUX AND/OR k1S sessions for demo - or use -WATCH on diffeent PANES
+pe "kubectl create -f hello-deploy-all.yaml"
+#pe "kubectl expose pod app-pod"
+
+pei "# Lets access the service - could be locally or remotelly."
+pei "# Run curl a number of times, and observe the the corresponding replies. I will do it from inside the cluster."
+
+
+#   ----- WORK ON A LOOP OR CMD FOR repetition HERE -----
+pe 'IP=$(kubectl get svc -n=$N hello-deploy --no-headers -o=custom-columns=ip:.spec.clusterIP)'
+pe 'echo $IP'
+pe "curl $IP"
+
+#   ----- PROVISIONAL 2 -----
+pe "curl $IP"
+
+#   ----- PROVISIONAL 3  -----
+pe "curl $IP"
+
+#   ----- PROVISIONAL 4  -----
+pe "curl $IP"
+
+#   ----- PRIVISIONAL 5 - LAST -----
+pe "curl $IP"
+#   ----- REVIEW ABOVE - IMPROVE -----
+
+
+
+
+#   Using NodePort from inside
+
+#pe 'PORT=$(kubectl get svc -n=$N hello-deploy -o=custom-columns=ip:.spec.ports[0].nodePort --no-headers)'
+#pe 'echo $PORT'
+#pe 'curl localhost:$PORT'
+
+#   Using NodePort from the oustide
+
+##pe "NODE_IP=$(curl ifconfig.io 2>/dev/null)"        (Double "#" means this was a comment on my previous file)
+#NODE_IP=$(curl ifconfig.io 2>/dev/null)
+#pe 'echo $NODE_IP'
+#pe "curl $NODE_IP:$PORT"
+
+
+#pei "kubectl delete deploy -n=$N hello-deploy"
+#pe "kubectl delete svc -n=$N hello-deploy"
