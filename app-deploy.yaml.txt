@@ -1,0 +1,32 @@
+# app-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-deploy
+    demo: demo2
+  name: app-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: app-deploy
+        demo: demo2
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: vol-cm
+      volumes:
+      - name: vol-cm
+        configMap:
+          name: dep-cm

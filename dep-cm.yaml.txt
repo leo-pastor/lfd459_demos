@@ -1,0 +1,8 @@
+# dep-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dep-cm
+data:
+  index.html:
+    "DEPLOYMENT\n\n"

@@ -1,0 +1,21 @@
+# app-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    type: app-pod
+    demo: demo1
+  name: app-pod
+spec:
+  containers:
+  - name: app-pod
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: cm-vol
+  volumes:
+  - name: cm-vol
+    configMap:
+      name: pod-cm

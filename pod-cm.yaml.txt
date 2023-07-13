@@ -1,0 +1,21 @@
+# pod-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pod-cm
+data:
+  index.html:
+    "POD\n\n"
+
+
+
+
+
+# Preliminar version
+# //////////////////////
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: pod-cm
+# data:
+#   index.html:

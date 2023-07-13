@@ -1,0 +1,28 @@
+kubectl run app-hack --image nginxdemos/hello:plain-text -n demos -l type=app-pod
+
+
+
+
+
+
+
+
+1. curl the PODs first, as endpoints
+
+2. curl the only SERVICE (probably app-pod-svc, depending on the labels used above) repeteadly, getting different results!!
+
+3. If time permits, show having different number of labels, and using different combinations: (2 labels in a pod and 1 in the other is enough!)
+   A - If you want to be more selective, you have to use more labels in specific objects;
+   B - If you want to be more flexible, you can use less labels - or no label at all (when all the objects of that corresponding type will be considered)
+   C This relates to my question about how to use multiple labels - can you enforce using all of the labes (ANDing) or you can use them more 'lightly' - if you use more than one label. 
+   D Finally, show you can use both "selectors' and 'labels' simultaneously in you r kubectl commands. That is handy, because for instance PODs do NOT present selectors as they do NOT have or use them, whereas SVCs use both.
+
+
+
+
+
+# To play around at the end and show students that you can have pods with different apps as endpoints of 
+# the same service (SECURITY).
+
+# The important point to highlight is that the LABELS play an important role - even when they are not aimed to 
+# be a security mechanism, they impact in security (CAREFUL !)
