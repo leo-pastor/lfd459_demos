@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: app-pod
-    image: nginx
+    image: nginx:alpine
     ports:
     - containerPort: 80
     volumeMounts:
